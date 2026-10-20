@@ -1,0 +1,412 @@
+"use client";
+
+import React, { useState } from "react";
+import { 
+  ShieldCheck, 
+  ArrowRight, 
+  CheckCircle2, 
+  AlertCircle, 
+  Lock, 
+  FileText, 
+  Compass, 
+  Sparkles,
+  Calendar,
+  Layers,
+  VolumeX,
+  Target
+} from "lucide-react";
+
+export default function LandingPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    role: "Founder / CEO",
+    url: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error("Submission failed. Please check details.");
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0B0F17] text-[#F8FAFC]">
+      {/* Top Header */}
+      <header className="border-b border-slate-800/80 bg-[#0B0F17]/80 backdrop-blur sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <span className="text-xl font-bold tracking-tight text-white">
+              Writers<span className="text-amber-400">Needss</span>
+            </span>
+            <span className="hidden sm:inline-block text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono">
+              Positioning Practice
+            </span>
+          </div>
+          <a 
+            href="https://writersneedss.wordpress.com/" 
+            target="_blank" 
+            rel="noreferrer"
+            className="text-xs text-slate-400 hover:text-white transition-colors"
+          >
+            Visit Official Agency Site &rarr;
+          </a>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="pt-16 pb-20 px-6 max-w-6xl mx-auto">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/20 text-amber-300 text-xs font-medium mb-6">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Executive Positioning Briefing • 2026 Edition</span>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {/* Left Column: Core Value Proposition */}
+          <div className="lg:col-span-7 space-y-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-white">
+              Words that carry the <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100">weight your work</span> already has.
+            </h1>
+            
+            <p className="text-lg text-slate-300 leading-relaxed font-light">
+              Your real-world expertise is proven in boardrooms and client meetings. But when enterprise buyers or investors look you up, does your digital presence communicate the same authority?
+            </p>
+
+            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-sm text-slate-300">
+              <p className="italic">
+                &ldquo;At WritersNeedss, we sit with how you actually talk, what you actually mean, and turn that into copy that sounds like you on your sharpest day — not like it was written by committee or a robot.&rdquo;
+              </p>
+              <p className="mt-2 text-xs text-amber-400 font-medium tracking-wide">
+                — Gift Esema, Founder at WritersNeedss
+              </p>
+            </div>
+
+            {/* Quick Teardown Highlights */}
+            <div className="space-y-3 pt-2">
+              <p className="text-xs uppercase font-mono tracking-widest text-slate-400">
+                Inside the 6-Page Teardown:
+              </p>
+              <div className="grid sm:grid-cols-2 gap-3 text-sm text-slate-300">
+                <div className="flex items-start space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                  <span>The 5 commercial leaks diluting high-ticket trust</span>
+                </div>
+                <div className="flex items-start space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                  <span>Why generic AI copy sounds dead in executive rooms</span>
+                </div>
+                <div className="flex items-start space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                  <span>Real before/after LinkedIn profile transformation</span>
+                </div>
+                <div className="flex items-start space-x-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
+                  <span>The 48-Hour Executive Remediation Checklist</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Lead Capture Form Card */}
+          <div className="lg:col-span-5">
+            <div className="rounded-2xl bg-[#121824] border border-slate-800 p-8 shadow-2xl relative">
+              {!submitted ? (
+                <>
+                  <div className="mb-6">
+                    <h3 className="text-xl font-bold text-white tracking-tight">
+                      Get The Executive Teardown
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Direct PDF download + 5-part private positioning masterclass.
+                    </p>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-medium text-slate-300 mb-1">
+                        Your Full Name
+                      </label>
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="e.g. Alex Morgan"
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-slate-300 mb-1">
+                        Business Email Address
+                      </label>
+                      <input 
+                        type="email" 
+                        required
+                        placeholder="alex@yourcompany.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-slate-300 mb-1">
+                        Current Professional Role
+                      </label>
+                      <select 
+                        value={formData.role}
+                        onChange={(e) => setFormData({...formData, role: e.target.value})}
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                      >
+                        <option>Founder / CEO</option>
+                        <option>Executive / Managing Director</option>
+                        <option>Boutique Consultant / Advisor</option>
+                        <option>Recruiter / Talent Strategist</option>
+                        <option>Business Owner</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-slate-300 mb-1">
+                        LinkedIn Profile or Company URL <span className="text-slate-500">(Optional)</span>
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="linkedin.com/in/yourprofile"
+                        value={formData.url}
+                        onChange={(e) => setFormData({...formData, url: e.target.value})}
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                      />
+                    </div>
+
+                    {error && (
+                      <div className="p-3 rounded bg-red-950/40 border border-red-800 text-red-300 text-xs flex items-center space-x-2">
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        <span>{error}</span>
+                      </div>
+                    )}
+
+                    <button 
+                      type="submit" 
+                      disabled={loading}
+                      className="w-full py-3.5 px-4 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm flex items-center justify-center space-x-2 transition-all shadow-lg shadow-amber-400/10 disabled:opacity-50"
+                    >
+                      {loading ? (
+                        <span>Preparing Your PDF...</span>
+                      ) : (
+                        <>
+                          <span>Send Me The Teardown Now</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+
+                    <div className="flex items-center justify-center space-x-2 text-[11px] text-slate-500 pt-1">
+                      <Lock className="w-3 h-3" />
+                      <span>Zero spam. No promotional sales calls without invitation.</span>
+                    </div>
+                  </form>
+                </>
+              ) : (
+                /* Instant Download & Conversion State */
+                <div className="text-center py-6 space-y-5">
+                  <div className="w-12 h-12 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-7 h-7" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Your Teardown Is Ready</h3>
+                    <p className="text-xs text-slate-300 mt-2">
+                      We&apos;ve logged your request for <strong className="text-white">{formData.email}</strong>. You can view it immediately below:
+                    </p>
+                  </div>
+
+                  <a 
+                    href="#download" 
+                    onClick={() => alert("Downloading The Executive Positioning Teardown (PDF)...")}
+                    className="inline-flex items-center justify-center space-x-2 w-full py-3 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-medium text-sm transition-colors border border-slate-700"
+                  >
+                    <FileText className="w-4 h-4 text-amber-400" />
+                    <span>Download PDF Document</span>
+                  </a>
+
+                  <div className="pt-4 border-t border-slate-800 text-left">
+                    <p className="text-xs font-semibold text-amber-400 uppercase tracking-wide">
+                      Next Step:
+                    </p>
+                    <p className="text-xs text-slate-300 mt-1">
+                      Want Gift Esema to personally review your digital positioning?
+                    </p>
+                    <a 
+                      href="https://writersneedss.wordpress.com/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-3 inline-flex items-center space-x-1.5 text-xs text-white font-medium hover:text-amber-300"
+                    >
+                      <Calendar className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Request a 20-minute Positioning Assessment &rarr;</span>
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Breakdown Section: The 5 Leaks */}
+      <section className="py-20 border-t border-slate-800/80 bg-slate-900/30">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-xs uppercase font-mono tracking-widest text-amber-400 mb-2">
+              The Diagnosis
+            </h2>
+            <h3 className="text-3xl font-extrabold text-white tracking-tight">
+              The 5 Costly Leaks in Most B2B Profiles
+            </h3>
+            <p className="text-sm text-slate-400 mt-3">
+              Why high-calibre professionals lose opportunities before the conversation even starts.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3">
+              <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400 font-mono text-sm font-bold">
+                01
+              </div>
+              <h4 className="text-lg font-bold text-white">The Passive Resume</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Listing historical duties and degrees without stating your current commercial thesis or what problem you solve today.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3">
+              <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400 font-mono text-sm font-bold">
+                02
+              </div>
+              <h4 className="text-lg font-bold text-white">The Committee Voice</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Sanitised, generic corporate jargon that sounds safe but fails to show how you actually think in private strategy sessions.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3">
+              <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400 font-mono text-sm font-bold">
+                03
+              </div>
+              <h4 className="text-lg font-bold text-white">Content Hamster Wheel</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Chasing vanity algorithm metrics and posting daily without clear positioning infrastructure that converts readers.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3">
+              <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400 font-mono text-sm font-bold">
+                04
+              </div>
+              <h4 className="text-lg font-bold text-white">The Leaky Pipeline</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Allowing interested prospects to read your insights and leave without an automated, high-value nurture pathway.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3">
+              <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400 font-mono text-sm font-bold">
+                05
+              </div>
+              <h4 className="text-lg font-bold text-white">The Missing Pathway</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Forcing enterprise decision-makers to hunt for a way to engage with you rather than providing a clean diagnostic path.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-amber-400/10 border border-amber-400/30 flex flex-col justify-center space-y-3">
+              <h4 className="text-lg font-bold text-amber-300">Fix It In 48 Hours</h4>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Section 4 of the teardown contains the precise, step-by-step remediation guide used across WritersNeedss client engagements.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Qualification Section */}
+      <section className="py-20 max-w-5xl mx-auto px-6">
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 space-y-4">
+            <div className="flex items-center space-x-2 text-emerald-400 text-sm font-bold">
+              <CheckCircle2 className="w-5 h-5" />
+              <span>WHO THIS IS BUILT FOR</span>
+            </div>
+            <ul className="space-y-3 text-xs text-slate-300">
+              <li className="flex items-start space-x-2">
+                <span className="text-amber-400 font-bold">&bull;</span>
+                <span>Founders building companies who need credibility in front of investors and clients.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-amber-400 font-bold">&bull;</span>
+                <span>Managing Directors & Consultants whose offline reputation exceeds their online footprint.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-amber-400 font-bold">&bull;</span>
+                <span>Leaders who refuse to spend their evenings writing generic social media posts.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 space-y-4">
+            <div className="flex items-center space-x-2 text-rose-400 text-sm font-bold">
+              <AlertCircle className="w-5 h-5" />
+              <span>WHO THIS IS NOT FOR</span>
+            </div>
+            <ul className="space-y-3 text-xs text-slate-400">
+              <li className="flex items-start space-x-2">
+                <span className="text-rose-400 font-bold">&bull;</span>
+                <span>Anyone looking for &ldquo;growth hacks&rdquo;, automated pods, or vanity follower counts.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-rose-400 font-bold">&bull;</span>
+                <span>People looking to copy generic AI-generated templates without real domain expertise.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-rose-400 font-bold">&bull;</span>
+                <span>Individuals not offering serious commercial or professional services.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 py-10 px-6 text-center text-xs text-slate-500 space-y-3">
+        <p className="font-medium text-slate-400">
+          WritersNeedss &bull; Growth, Positioning & Content Strategy
+        </p>
+        <p>
+          Lagos, Nigeria &bull; Serving Founders & Executives Globally
+        </p>
+        <p className="text-[11px] text-slate-600">
+          &copy; {new Date().getFullYear()} WritersNeedss. All rights reserved.
+        </p>
+      </footer>
+    </div>
+  );
+}
